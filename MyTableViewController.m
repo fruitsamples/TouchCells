@@ -1,7 +1,7 @@
 /*
      File: MyTableViewController.m
  Abstract: The main table view controller of this app.
-  Version: 1.0
+  Version: 1.2
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -41,46 +41,33 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ Copyright (C) 2009 Apple Inc. All Rights Reserved.
  
  */
 
 #import "MyTableViewController.h"
 #import "CustomCell.h"
+#import "AppDelegate.h"
 
 @interface MyTableViewController ()
-	NSMutableArray *dataArray;
+@property (nonatomic, retain) NSMutableArray *dataArray;
 @end
 
 @implementation MyTableViewController
 
+@synthesize dataArray;
+
 - (void)viewDidLoad
 {
-	dataArray = [[NSMutableArray alloc] initWithCapacity:6];
-	[dataArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-						  @"Mac Pro", @"text",
-						  [NSNumber numberWithBool:YES], @"checked",
-						  nil]];
-	[dataArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-						  @"Mac Mini", @"text",
-						  [NSNumber numberWithBool:NO], @"checked",
-						  nil]];
-	[dataArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-						  @"iMac", @"text",
-						  [NSNumber numberWithBool:NO], @"checked",
-						  nil]];
-	[dataArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-						  @"MacBook", @"text",
-						  [NSNumber numberWithBool:NO], @"checked",
-						  nil]];
-	[dataArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-						  @"MacBook Pro", @"text",
-						  [NSNumber numberWithBool:YES], @"checked",
-						  nil]];
-	[dataArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
-						  @"MacBook Air", @"text",
-						  [NSNumber numberWithBool:NO], @"checked",
-						  nil]];
+	// load our data from a plist file inside our app bundle
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"tableData" ofType:@"plist"];
+	self.dataArray = [NSMutableArray arrayWithContentsOfFile:path];
+}
+
+- (void)viewDidUnload
+{
+	// release the array
+	self.dataArray = nil;
 }
 
 - (void)dealloc
@@ -116,15 +103,21 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return [dataArray count];
+	return [self.dataArray count];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	// find the cell being touched and update its checked/unchecked image
 	CustomCell *targetCustomCell = (CustomCell *)[tableView cellForRowAtIndexPath:indexPath];
 	[targetCustomCell checkAction:nil];
 	
+	// don't keep the table selection
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+	// update our data source array with the new checked state
+	NSMutableDictionary *selectedItem = [self.dataArray objectAtIndex:indexPath.row];
+	[selectedItem setObject:[NSNumber numberWithBool:targetCustomCell.checked] forKey:@"checked"];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -134,15 +127,29 @@
 	CustomCell *cell = (CustomCell *)[tableView dequeueReusableCellWithIdentifier:kCustomCellID];
 	if (cell == nil)
 	{
-		cell = (CustomCell *)[[[CustomCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCustomCellID] autorelease];
+		cell = (CustomCell *)[[[CustomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCustomCellID] autorelease];
 	}
 	
 	NSDictionary *item = [dataArray objectAtIndex:indexPath.row];
 	NSString* title = [item objectForKey:@"text"];
 	cell.title = title;
+	cell.textLabel.text = title;
 	cell.checked = [[item objectForKey:@"checked"] boolValue];
-	
+
 	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+	// called when the accessory view (disclosure button) is touched
+	CustomCell *cell = (CustomCell *)[tableView	cellForRowAtIndexPath:indexPath];	
+	
+	AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+	NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:
+							  cell.title, @"text",
+							  [NSNumber numberWithBool:cell.checked], @"checked",
+							  nil];
+	[appDelegate showDetail:infoDict];
 }
 
 @end

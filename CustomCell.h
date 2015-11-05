@@ -1,7 +1,7 @@
 /*
      File: CustomCell.h
  Abstract: The custom UITableViewCell for holding the checkmark button.
-  Version: 1.0
+  Version: 1.2
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -41,7 +41,7 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ Copyright (C) 2009 Apple Inc. All Rights Reserved.
  
  */
 
@@ -53,7 +53,6 @@
 	NSString *title;
 	
 	UIButton *checkButton;
-	UILabel *titleLabel;
 }
 
 @property (nonatomic, retain) NSString *title;

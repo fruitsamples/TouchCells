@@ -14,6 +14,7 @@
 		5308C8720E782B0A009B18CF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5308C8710E782B0A009B18CF /* Default.png */; };
 		53095FF50D9C4D1A00F143AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53095FF30D9C4D1A00F143AD /* AppDelegate.m */; };
 		5309602E0D9C4E0800F143AD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5309602D0D9C4E0800F143AD /* QuartzCore.framework */; };
+		5309C95B0EED8367001636AB /* tableData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5309C95A0EED8367001636AB /* tableData.plist */; };
 		53743DB80E5A3E33006E6D4D /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53743DB60E5A3E33006E6D4D /* CustomCell.m */; };
 		53743E2D0E5A475E006E6D4D /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53743E2C0E5A475E006E6D4D /* DetailViewController.m */; };
 		539DD9CD0E5A538B00748D45 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539DD9CB0E5A538B00748D45 /* DetailViewController.xib */; };
@@ -34,6 +35,7 @@
 		53095FF20D9C4D1A00F143AD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		53095FF30D9C4D1A00F143AD /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5309602D0D9C4E0800F143AD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5309C95A0EED8367001636AB /* tableData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tableData.plist; sourceTree = "<group>"; };
 		53743DB60E5A3E33006E6D4D /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		53743DB70E5A3E33006E6D4D /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		53743E2B0E5A475E006E6D4D /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5309C95A0EED8367001636AB /* tableData.plist */,
 				5308C8710E782B0A009B18CF /* Default.png */,
 				53F7EFD00E5B324600963339 /* checked.png */,
 				53F7EFD10E5B324600963339 /* unchecked.png */,
@@ -178,6 +181,7 @@
 				53F7EFD20E5B324600963339 /* checked.png in Resources */,
 				53F7EFD30E5B324600963339 /* unchecked.png in Resources */,
 				5308C8720E782B0A009B18CF /* Default.png in Resources */,
+				5309C95B0EED8367001636AB /* tableData.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +250,7 @@
 				GCC_PREFIX_HEADER = Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PREBINDING = NO;
-				PRODUCT_NAME = TableViewController;
+				PRODUCT_NAME = TouchCells;
 			};
 			name = Release;
 		};
@@ -261,7 +265,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -274,7 +278,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.0;
+				SDKROOT = iphoneos3.0;
 			};
 			name = Release;
 		};

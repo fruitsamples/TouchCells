@@ -1,7 +1,7 @@
 /*
      File: CustomCell.m
  Abstract: The custom UITableViewCell for holding the checkmark button.
-  Version: 1.0
+  Version: 1.2
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
  Inc. ("Apple") in consideration of your agreement to the following
@@ -41,33 +41,28 @@
  STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
  
- Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ Copyright (C) 2009 Apple Inc. All Rights Reserved.
  
  */
 
 #import "CustomCell.h"
-#import "AppDelegate.h"
 
 @implementation CustomCell
 
 @synthesize checked, title;
 
-- (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier])
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
 	{
-		self.target = self;
 		self.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-		self.accessoryAction = @selector(onClick:);
 		
 		// cell's title label
-		titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-		titleLabel.backgroundColor = [UIColor clearColor];
-		titleLabel.opaque = NO;
-		titleLabel.textColor = [UIColor blackColor];
-		titleLabel.highlightedTextColor = [UIColor whiteColor];
-		titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
-		[self.contentView addSubview:titleLabel];
+		self.textLabel.backgroundColor = self.backgroundColor;
+		self.textLabel.opaque = NO;
+		self.textLabel.textColor = [UIColor blackColor];
+		self.textLabel.highlightedTextColor = [UIColor whiteColor];
+		self.textLabel.font = [UIFont boldSystemFontOfSize:18.0];
 		
 		// cell's check button
 		checkButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
@@ -75,21 +70,10 @@
 		checkButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		checkButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 		[checkButton addTarget:self action:@selector(checkAction:) forControlEvents:UIControlEventTouchDown];
-		checkButton.backgroundColor = [UIColor clearColor];
+		checkButton.backgroundColor = self.backgroundColor;
 		[self.contentView addSubview:checkButton];
 	}
 	return self;
-}
-
-// called when the accessory view (disclosure button) is touched
-- (void)onClick:(id)sender
-{
-	AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-	NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:
-								self.title, @"text",
-								[NSNumber numberWithBool:self.checked], @"checked",
-								nil];
-	[appDelegate showDetail:infoDict];
 }
 
 - (void)layoutSubviews
@@ -99,8 +83,7 @@
     CGRect contentRect = [self.contentView bounds];
 	
 	CGRect frame = CGRectMake(contentRect.origin.x + 40.0, 8.0, contentRect.size.width, 30.0);
-	titleLabel.frame = frame;
-	titleLabel.text = self.title;
+	self.textLabel.frame = frame;
 	
 	// layout the check button image
 	UIImage *checkedImage = [UIImage imageNamed:@"checked.png"];
@@ -114,7 +97,6 @@
 
 - (void)dealloc
 {
-	[titleLabel release];
 	[checkButton release];
 	[title release];
     [super dealloc];
